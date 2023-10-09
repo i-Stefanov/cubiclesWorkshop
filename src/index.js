@@ -6,11 +6,14 @@ const PORT = 3000;
 const expressConfig = require("./config/expressConfig");
 // homeController = router from homeController.js file
 const homeController = require("./controllers/homeController");
+const cubeController = require("./controllers/cubeController");
 // call expressConfig with app
 expressConfig(app);
 handlebarsConfigurator(app);
 // Routes
 app.use(homeController);
+// use cubeController for all requests that start with /cubes
+app.use("/cubes", cubeController);
 app.listen(PORT, () => {
   console.log("Server is running on port: " + PORT);
 });
