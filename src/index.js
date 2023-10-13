@@ -14,6 +14,10 @@ handlebarsConfigurator(app);
 app.use(homeController);
 // use cubeController for all requests that start with /cubes
 app.use("/cubes", cubeController);
+// if route does not exist redirect to 404 page
+app.get("*", (req, res) => {
+  res.redirect("/404");
+});
 app.listen(PORT, () => {
   console.log("Server is running on port: " + PORT);
 });
