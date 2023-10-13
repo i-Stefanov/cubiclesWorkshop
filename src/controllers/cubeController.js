@@ -12,7 +12,11 @@ router.post("/create", (req, res) => {
     imageUrl,
     difficultyLevel: Number(difficultyLevel),
   });
-  console.log(cubeManager.getAll());
   res.redirect("/");
+});
+router.get("/:cubeId/details", (req, res) => {
+  const id = req.params.cubeId;
+  const cube = cubeManager.getById(id);
+  res.render("details", { cube });
 });
 module.exports = router;
