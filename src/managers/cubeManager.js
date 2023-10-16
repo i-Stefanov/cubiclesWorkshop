@@ -20,6 +20,7 @@ const cubes = [
 ];
 exports.getAll = (search, from, to) => {
   let result = cubes.slice();
+  // search functionality
   if (search) {
     result = result.filter((cube) =>
       cube.name.toLowerCase().includes(search.toLowerCase())
@@ -39,6 +40,7 @@ exports.getById = (id) => {
 exports.create = (cubeData) => {
   const newCube = {
     id: uuidv4(),
+    // spread cubeData since it is an object
     ...cubeData,
   };
   cubes.push(newCube);

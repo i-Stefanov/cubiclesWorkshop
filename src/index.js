@@ -13,6 +13,7 @@ expressConfig(app);
 handlebarsConfigurator(app);
 dbConnect()
   .then(() => console.log("DB connected successfuly"))
+  //handle error
   .catch((err) => console.log("DB error: " + err));
 // Routes
 app.use(routes);
