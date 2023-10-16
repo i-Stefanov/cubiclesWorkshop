@@ -4,9 +4,9 @@ const cubeManager = require("../managers/cubeManager");
 router.get("/create", (req, res) => {
   res.render("create");
 });
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
   const { name, description, imageUrl, difficultyLevel } = req.body;
-  cubeManager.create({
+  await cubeManager.create({
     name,
     description,
     imageUrl,
@@ -14,9 +14,10 @@ router.post("/create", (req, res) => {
   });
   res.redirect("/");
 });
-router.get("/:cubeId/details", (req, res) => {
+router.get("/:cubeId/details", async (req, res) => {
   const id = req.params.cubeId;
-  const cube = cubeManager.getById(id);
+  // since the cube that is returned from the db is not an object but a query that is then transformed into a document and handlebars works only with objects we use .lean() to transform the document into an object
+  const cube = await cubeManager.getOne(id).lean();
   if (!cube) {
     res.redirect("/404");
   }
