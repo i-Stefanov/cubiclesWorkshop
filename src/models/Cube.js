@@ -5,6 +5,14 @@ const cubeSchema = new mongoose.Schema({
   description: String,
   imageUrl: String,
   difficultyLevel: Number,
+  accessories: [
+    {
+      // what is the type of the variable accessory
+      type: mongoose.Types.ObjectId,
+      //in which model to look for the accessory
+      ref: "Accessory",
+    },
+  ],
 });
 // set the model name to Cube and use the cubeSchema
 const Cube = mongoose.model("Cube", cubeSchema);
