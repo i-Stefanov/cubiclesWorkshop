@@ -5,7 +5,7 @@ router.get("/create", (req, res) => {
 });
 router.post("/create", async (req, res) => {
   const { name, description, imageUrl } = req.body;
-  //TODO: add accessory to DB
+  //add accessory to DB
   await accessoryManager.create({ name, description, imageUrl });
 
   res.redirect("/");
