@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const cubeManager = require("../managers/cubeManager");
+const accessoryManager = require("../managers/accessoryManager");
 // path /cubes/create
 router.get("/create", (req, res) => {
   res.render("create");
@@ -22,5 +23,9 @@ router.get("/:cubeId/details", async (req, res) => {
     res.redirect("/404");
   }
   res.render("details", { cube });
+});
+router.get("/:cubeId/attach-accessory", async (req, res) => {
+  // const accessories = await accessoryManager.
+  res.render("accessory/attachAccessory");
 });
 module.exports = router;
