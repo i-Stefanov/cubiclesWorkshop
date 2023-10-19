@@ -30,8 +30,8 @@ router.get("/:cubeId/details", async (req, res) => {
 router.get("/:cubeId/attach-accessory", async (req, res) => {
   const id = req.params.cubeId;
   const cube = await cubeManager.getOne(id).lean();
-
-  const accessories = await accessoryManager.getAll();
+  // get all accessories that don't have the id of any of the attached ones to this cube
+  const accessories = await accessoryManager.getNotOwned(cube.accessories);
   const hasAccessories = accessories.length > 0;
   res.render("accessory/attachAccessory", {
     cube,

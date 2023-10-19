@@ -27,7 +27,7 @@ exports.create = async (cubeData) => {
 };
 exports.attachAccessory = async (cubeId, accessoryId) => {
   return Cube.findByIdAndUpdate(cubeId, {
-    // this means - push the accessoryId (see attachAccessory) in the accessories array located in the Cube model
+    // this means - push the accessoryId (see attachAccessory.hbs) in the accessories array located in the Cube model
     $push: { accessories: accessoryId },
   });
 };
