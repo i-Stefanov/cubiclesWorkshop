@@ -21,8 +21,11 @@ userSchema.virtual("repeatPassword").set(function (value) {
     throw new mongoose.MongooseError("Passwords don't match!");
   }
 });
+//todo check if user exists
+// hash the password BEFORE saving the User in DB
 userSchema.pre("save", async function () {
   // the second paramenter 10 refers to the rounds of salt (cost factor) controls how much time takes to generate the hash and salt that makes brute force less probable
+  //create hash using hashing function in which we pass the password as argument
   const hash = await bcrypt.hash(this.password, 10);
   //replace teh password with the hash
   this.password = hash;
