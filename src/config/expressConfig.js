@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const cookieParser = require("cookie-parser");
 
 function expressConfig(app) {
   //Express config
@@ -9,5 +10,6 @@ function expressConfig(app) {
   app.use(express.static(path.resolve(__dirname, "../public")));
   // setup body-parser which is built in express (used for extracting data from forms as an object)
   app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
 }
 module.exports = expressConfig;
