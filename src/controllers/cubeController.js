@@ -4,7 +4,6 @@ const accessoryManager = require("../managers/accessoryManager");
 // path /cubes/create
 router.get("/create", (req, res) => {
   // the user is added to the req object in the authMiddleware
-  console.log(req.user);
   res.render("create");
 });
 router.post("/create", async (req, res) => {
@@ -14,6 +13,7 @@ router.post("/create", async (req, res) => {
     description,
     imageUrl,
     difficultyLevel: Number(difficultyLevel),
+    owner: req.user._id,
   });
   res.redirect("/");
 });

@@ -12,6 +12,7 @@ function expressConfig(app) {
   // setup body-parser which is built in express (used for extracting data from forms as an object)
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+  // this middleware is executed before every route
   app.use(auth);
 }
 module.exports = expressConfig;
