@@ -14,9 +14,8 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const token = await userManager.login(username, password);
-  console.log(token);
   // first argument the name of the cookie,second arg the value of the cookie
-  res.cookie("token", token, { httpOnly: true });
+  res.cookie("auth", token, { httpOnly: true });
   res.redirect("/");
 });
 module.exports = router;
