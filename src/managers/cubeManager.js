@@ -25,11 +25,12 @@ exports.create = async (cubeData) => {
   const cube = new Cube(cubeData);
   await cube.save();
 };
+exports.update = (cubeId, cubeData) => Cube.findOneAndUpdate(cubeId, cubeData);
+exports.delete = (cubeId) => Cube.findByIdAndDelete(cubeId);
+
 exports.attachAccessory = async (cubeId, accessoryId) => {
   return Cube.findByIdAndUpdate(cubeId, {
     // this means - push the accessoryId (see attachAccessory.hbs) in the accessories array located in the Cube model
     $push: { accessories: accessoryId },
   });
 };
-
-exports.delete = (cubeId) => Cube.findByIdAndDelete(cubeId);
