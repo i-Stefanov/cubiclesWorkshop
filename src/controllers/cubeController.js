@@ -4,7 +4,7 @@ const accessoryManager = require("../managers/accessoryManager");
 // path /cubes/create
 router.get("/create", (req, res) => {
   // the user is added to the req object in the authMiddleware
-  res.render("create");
+  res.render("cube/create");
 });
 router.post("/create", async (req, res) => {
   const { name, description, imageUrl, difficultyLevel } = req.body;
@@ -27,7 +27,7 @@ router.get("/:cubeId/details", async (req, res) => {
   }
   const hasAccessories = cube.accessories.length > 0;
   // const cubeAccessories =
-  res.render("details", { cube });
+  res.render("cube/details", { cube });
 });
 router.get("/:cubeId/attach-accessory", async (req, res) => {
   const id = req.params.cubeId;
@@ -47,5 +47,9 @@ router.post("/:cubeId/attach-accessory", async (req, res) => {
   const cubeId = req.params.cubeId;
   await cubeManager.attachAccessory(cubeId, accessoryId);
   res.redirect(`/cubes/${cubeId}/details`);
+});
+router.get("/:cubeId/delete", async (req, res) => {
+  const cube = await cubeManager.getOne(req.params.cubeId).lean();
+  res.render("cube/delete", { cube });
 });
 module.exports = router;
