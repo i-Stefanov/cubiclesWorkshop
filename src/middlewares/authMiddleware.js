@@ -10,8 +10,8 @@ exports.auth = async (req, res, next) => {
     // validate token
     // if the user is valid jwt.verify returns the decoded token ,in this case ,the user
     try {
-      const user = await jwt.verify(token, SECRET);
-      req.user = user;
+      const decodedToken = await jwt.verify(token, SECRET); //returns the payload
+      req.user = decodedToken;
       next();
     } catch (error) {
       console.log(error);
