@@ -22,13 +22,14 @@ router.get("/:cubeId/details", async (req, res) => {
   const id = req.params.cubeId;
   // since the cube that is returned from the db is not an object but a query that is then transformed into a document and handlebars works only with objects we use .lean() to transform the document into an object
   const cube = await cubeManager.getOneWithAccessories(id).lean();
+  // check if the current user is the owner of the current cube
+  const isOwner = cube.owner == req.user._id;
 
   if (!cube) {
     res.redirect("/404");
   }
-  // const hasAccessories = cube.accessories.length > 0;
-  // const cubeAccessories =
-  res.render("cube/details", { cube });
+
+  res.render("cube/details", { cube, isOwner });
 });
 router.get("/:cubeId/attach-accessory", async (req, res) => {
   const id = req.params.cubeId;
