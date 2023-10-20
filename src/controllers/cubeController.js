@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const cubeManager = require("../managers/cubeManager");
 const accessoryManager = require("../managers/accessoryManager");
+const { getDifficultyOptionsViewData } = require("../utils/viewHelpers");
 // path /cubes/create
 router.get("/create", (req, res) => {
   // the user is added to the req object in the authMiddleware
@@ -25,7 +26,7 @@ router.get("/:cubeId/details", async (req, res) => {
   if (!cube) {
     res.redirect("/404");
   }
-  const hasAccessories = cube.accessories.length > 0;
+  // const hasAccessories = cube.accessories.length > 0;
   // const cubeAccessories =
   res.render("cube/details", { cube });
 });
@@ -48,17 +49,12 @@ router.post("/:cubeId/attach-accessory", async (req, res) => {
   await cubeManager.attachAccessory(cubeId, accessoryId);
   res.redirect(`/cubes/${cubeId}/details`);
 });
-router.get("/:cubeId/delete", async (req, res) => {
-  const cube = await cubeManager.getOne(req.params.cubeId).lean();
-  res.render("cube/delete", { cube });
-});
-router.post("/:cubeId/delete", async (req, res) => {
-  await cubeManager.delete(req.params.cubeId);
-  res.redirect("/");
-});
+// prepare data for the edit view
+
 router.get("/:cubeId/edit", async (req, res) => {
   const cube = await cubeManager.getOne(req.params.cubeId).lean();
-  res.render("cube/edit", { cube });
+  const options = getDifficultyOptionsViewData(cube.difficultyLevel);
+  res.render("cube/edit", { cube, options });
 });
 router.post("/:cubeId/edit", async (req, res) => {
   const { name, description, imageUrl, difficultyLevel } = req.body;
@@ -72,5 +68,15 @@ router.post("/:cubeId/edit", async (req, res) => {
     }
   );
   res.redirect(`/cubes/${req.params.cubeId}/details`);
+});
+router.get("/:cubeId/delete", async (req, res) => {
+  const cube = await cubeManager.getOne(req.params.cubeId).lean();
+  const options = getDifficultyOptionsViewData(cube.difficultyLevel);
+
+  res.render("cube/delete", { cube, options });
+});
+router.post("/:cubeId/delete", async (req, res) => {
+  await cubeManager.delete(req.params.cubeId);
+  res.redirect("/");
 });
 module.exports = router;
